@@ -1,0 +1,18 @@
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+nltk.download('punkt')
+nltk.download('wordnet')
+def morphological_analysis(text):
+    tokens = word_tokenize(text)
+    porter_stemmer = PorterStemmer()
+    lemmatizer = WordNetLemmatizer()
+    stemmed_words = [porter_stemmer.stem(token) for token in tokens]
+    lemmatized_words = [lemmatizer.lemmatize(token) for token in tokens]
+    return tokens, stemmed_words, lemmatized_words
+text = "The foxes are jumping over the lazy dogs in the field."
+tokens, stemmed_words, lemmatized_words = morphological_analysis(text)
+print(f"Original Text: {text}")
+print(f"Tokens: {tokens}")
+print(f"Stemmed Words: {stemmed_words}")
+print(f"Lemmatized Words: {lemmatized_words}")
