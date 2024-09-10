@@ -1,0 +1,46 @@
+class FSM:
+    def __init__(self):
+        self.state = 'start'
+    def transition(self, noun):
+        if self.state == 'start':
+            if noun.endswith(('s', 'x', 'z', 'ch', 'sh')):
+                self.state = 'es'
+            elif noun.endswith('y') and noun[-2] not in 'aeiou':
+                self.state = 'ies'
+            elif noun.endswith(('f', 'fe')):
+                self.state = 'ves'
+            else:
+                self.state = 's'
+        return self.state
+    def generate_plural(self, noun):
+        self.state = 'start'
+        ending = self.transition(noun)
+        if ending == 's':
+            return noun + 's'
+        elif ending == 'es':
+            return noun + 'es'
+        elif ending == 'ies':
+            return noun[:-1] + 'ies'
+        elif ending == 'ves':
+            if noun.endswith('fe'):
+                return noun[:-2] + 'ves'
+            else:
+                return noun[:-1] + 'ves'
+        else:
+            # Handle irregular plurals here (you can add more rules)
+            irregulars = {
+                'child': 'children',
+                'man': 'men',
+                'woman': 'women',
+                'tooth': 'teeth',
+                'foot': 'feet',
+                'mouse': 'mice',
+                'goose': 'geese',
+                'person': 'people'
+            }
+            return irregulars.get(noun, noun + 's')
+fsm = FSM()
+nouns = ['cat', 'dog', 'bus', 'fox', 'baby', 'leaf', 'wife', 'child', 'man', 'person']
+for noun in nouns:
+    plural = fsm.generate_plural(noun)
+    print(f"Singular: {noun}, Plural: {plural}")
