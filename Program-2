@@ -1,0 +1,33 @@
+class FSA:
+    def __init__(self):
+        self.states = {0: 'start', 1: 'a', 2: 'ab'}
+        self.final_state = 2
+        self.current_state = 0
+    def transition(self, char):
+        if self.current_state == 0:
+            if char == 'a':
+                self.current_state = 1
+            else:
+                self.current_state = 0
+        elif self.current_state == 1:
+            if char == 'b':
+                self.current_state = 2
+            elif char == 'a':
+                self.current_state = 1
+            else:
+                self.current_state = 0
+        elif self.current_state == 2:
+            if char == 'a':
+                self.current_state = 1
+            else:
+                self.current_state = 0
+    def is_accepted(self):
+        return self.current_state == self.final_state
+def match_string(input_string):
+    fsa = FSA()
+    for char in input_string:
+        fsa.transition(char)
+    return fsa.is_accepted()
+test_strings = ["ab", "aab", "abb", "aaab", "abcab", "bcaab", "xyz"]
+for s in test_strings:
+    print(f"String: {s}, Matches: {match_string(s)}")
