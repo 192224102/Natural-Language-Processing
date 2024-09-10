@@ -1,0 +1,16 @@
+import re
+
+def main():
+    text = "The quick brown fox jumps over the lazy dog. Call me at 123-456-7890 or email me at example@test.com."
+    words = re.findall(r'\b\w+\b', text)
+    print("Words:", words)
+    phone_numbers = re.findall(r'\d{3}-\d{3}-\d{4}', text)
+    print("Phone Numbers:", phone_numbers)
+    emails = re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', text)
+    print("Emails:", emails)
+    if re.search(r'brown', text):
+        print("Found 'brown' in the text")
+    replaced_text = re.sub(r'\bthe\b', 'THE', text, flags=re.IGNORECASE)
+    print("Replaced text:", replaced_text)
+if __name__ == "__main__":
+    main()
